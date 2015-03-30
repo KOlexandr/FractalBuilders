@@ -1,0 +1,16 @@
+body {
+    font-family: "Courier New", serif;
+    text-align: center;
+    color: white;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+canvas {
+    display: block;
+    width: 650px;
+    margin: 0 auto 20px;
+    cursor: crosshair;
+}
