@@ -16,7 +16,7 @@ function Mandel(screenXOff, screenYOff, x_extent, y_extent, context) {
     this._x = 0;
     this._y = 0;
 
-    this.myDone = false;
+    this.done = false;
     this.context = context;
 
     this.myColorMap = [];
@@ -48,7 +48,7 @@ Mandel.prototype.iterate = function (real, imag) {
 };
 
 Mandel.prototype.render = function () {
-    if (this.myDone) {
+    if (this.done) {
         return;
     }
 
@@ -76,7 +76,7 @@ Mandel.prototype.render = function () {
     }
 
     if (this._x >= this.myXExtent) {
-        this.myDone = true;
+        this.done = true;
     }
 };
 

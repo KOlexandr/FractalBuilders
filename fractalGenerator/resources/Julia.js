@@ -19,7 +19,7 @@ function Julia(screenXOff, screenYOff, x_extent, y_extent, context) {
     this._x = 0;
     this._y = 0;
     this.myBoxResolution = 100;
-    this.myDone = false;
+    this.done = false;
     this.context = context;
 }
 
@@ -54,7 +54,7 @@ Julia.prototype.iterate = function (real, imag) {
 };
 
 Julia.prototype.render = function () {
-    if (this.myDone) {
+    if (this.done) {
         return;
     }
 
@@ -81,7 +81,7 @@ Julia.prototype.render = function () {
     }
 
     if (this._x >= this.myXExtent) {
-        this.myDone = true;
+        this.done = true;
     }
 };
 

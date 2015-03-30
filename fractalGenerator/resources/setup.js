@@ -1,7 +1,8 @@
-function main(width, height) {
+function Main() {
+    var that = this;
     var canvas = document.getElementById('canvas');
-    width = width || canvas.width;
-    height = height || canvas.height;
+    var width = canvas.width;
+    var height = canvas.height;
 
     if (!canvas.getContext) {
         return;
@@ -11,28 +12,67 @@ function main(width, height) {
     context.font = "14pt Helvetica";
     context.lineWidth = 1;
 
-    document.getElementById("mm").addEventListener("click", function() {
-        renderFractal(new Mandel(0, 0, width, height, context))
+    document.getElementById("mf").addEventListener("click", function() {
+        changeButtonStatus(true);
+        that.renderFractal(new Mandel(0, 0, width, height, context))
     });
     document.getElementById("j1").addEventListener("click", function() {
-        renderFractal(new Julia(0, 0, width, height, context))
+        changeButtonStatus(true);
+        that.renderFractal(new Julia(0, 0, width, height, context))
     });
     document.getElementById("j2").addEventListener("click", function() {
+        changeButtonStatus(true);
         var julia = new Julia(0, 0, width, height, context);
         julia.myCR = -0.4;
         julia.myCI = 0.6;
-        renderFractal(julia)
+        that.renderFractal(julia)
     });
     document.getElementById("nm").addEventListener("click", function() {
-        renderFractal(new Newton(0, 0, width, height, context))
+        changeButtonStatus(true);
+        that.renderFractal(new Newton(0, 0, width, height, context))
+    });
+    document.getElementById("sf").addEventListener("click", function() {
+        changeButtonStatus(true);
+        that.renderFractal(new Sierpinski(width, height, context))
+    });
+    document.getElementById("pc").addEventListener("click", function() {
+        changeButtonStatus(true);
+        that.renderFractal(new Peano(6, width, height, context))
+    });
+
+    document.getElementById("start").addEventListener("click", function() {
+        changeButtonStatus(true);
+        if(null != that.fractal) {
+            that.fractal.done = false;
+            that.renderFractal(that.fractal);
+        }
+    });
+    document.getElementById("stop").addEventListener("click", function() {
+        changeButtonStatus(false);
+        if(null != that.fractal) {
+            that.fractal.done = true;
+        }
     });
 }
 
-function renderFractal(fractal) {
+Main.prototype.renderFractal = function(fractal) {
+    var that = this;
+    this.fractal = fractal;
     fractal.render();
-    if (!fractal.myDone) {
-        setTimeout(function() {
-            renderFractal(fractal);
+    if (!fractal.done) {
+        setTimeout(function () {
+            that.renderFractal(fractal);
         }, 1);
+    } else {
+        changeButtonStatus(false);
+    }
+};
+
+function changeButtonStatus(disable) {
+    var buttons = document.getElementsByTagName("button");
+    for(var i = 0; i < buttons.length; i++) {
+        if(buttons[i].id != "stop" && buttons[i].id != "start") {
+            buttons[i].disabled = disable ? "disabled" : "";
+        }
     }
 }

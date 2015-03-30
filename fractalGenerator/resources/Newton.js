@@ -18,7 +18,7 @@ function Newton(screenXOff, screenYOff, x_extent, y_extent, context) {
 
     this.myEO = false;
 
-    this.myDone = false;
+    this.done = false;
     this.context = context;
 }
 
@@ -100,7 +100,7 @@ Newton.prototype.iterate = function (x, y) {
 };
 
 Newton.prototype.render = function () {
-    if (this.myDone) {
+    if (this.done) {
         return;
     }
 
@@ -139,7 +139,7 @@ Newton.prototype.render = function () {
     if (this._x >= this.myXExtent) {
         if (this.myEO) {
             this.myEO = false;
-            this.myDone = true;
+            this.done = true;
         } else {
             this._x = 0;
             this.myEO = true;
