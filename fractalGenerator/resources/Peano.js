@@ -27,7 +27,8 @@ function Peano(steps, width, height, context) {
 
     this.done = false;
     this.context = context;
-    this.context.clearRect(0, 0, width, height);
+    this.context.beginPath();
+    this.context.clearRect(0, 0, this.width, this.height);
     this.pea(1, this.steps);
 
     this.xMultiplier = this.size / this.max(this.x) * this.steps;
