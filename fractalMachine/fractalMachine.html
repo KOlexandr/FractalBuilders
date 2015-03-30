@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fractal Machine</title>
+    <meta name="description" content="Fractal Machine">
+    <meta name="author" content="Oleksandr KOL Kucher">
+
+    <script src="fractal.js"></script>
+    <script src="resources/jquery.min.js"></script>
+
+    <link href="resources/fractalMachine.css" rel="stylesheet" type="text/css">
+    <link href="resources/bootstrap.min.css" rel="stylesheet" media="screen">
+</head>
+<body onload="fractal.init();">
+    <div class="container" style="margin: auto;">
+        <div class="alert alert-success"><h1 class="text-center"><strong>Fractal Machine</strong></h1></div>
+        <canvas id="main" style="border: 0 solid #000000;" onmousedown="fractal.drag.down(event);"></canvas>
+        <div id="controls" class="controls" style="padding-bottom: 5px;">
+            <div class="sliderlinecontainer" onmousedown="fractal.angle.jump(event)">
+                <div class="slider" id="angle" onmousedown="fractal.angle.down(event)" style="left: 410px;">
+                    <div class="sliderlabeldiv"><p class="sltitle">Angle</p><a id="langle">360</a><a>°</a></div>
+                </div>
+                <div class="sliderline"></div>
+            </div>
+            <div class="sliderlinecontainer" onmousedown="fractal.skewangle.jump(event)">
+                <div class="slider" id="skewangle" onmousedown="fractal.skewangle.down(event)" style="left: 80px;">
+                    <div class="sliderlabeldiv"><p class="sltitle">Skew</p><a id="lskewangle">-55</a><a>°</a></div>
+                </div>
+                <div class="sliderline"></div>
+            </div>
+            <table id="thumbtable"><tr id="thumbarea"></tr></table>
+            <table style="margin-top: 5px;">
+                <tr>
+                    <td><a class="button" onclick="fractal.reset();">Reset</a></td>
+                    <td><a class="button" onclick="fractal.random();">Random</a></td>
+                    <td>
+                        <div id="animatecell">
+                            <a class="buttongrey" id="animatebutton" onclick="fractal.animate.toggle();">Animate</a>
+                            <div class="menu">
+                                <a class="button" id="autobutton" onclick="fractal.auto.toggle();">Auto</a>
+                                <a class="button" id="anglelock" onmousedown="fractal.angle.locktoggle()"
+                                   onmouseover="fractal.angle.highlight(1)" onmouseout="fractal.angle.highlight(0)">Angle</a>
+                                <a class="button" id="skewanglelock" onmousedown="fractal.skewangle.locktoggle()"
+                                   onmouseover="fractal.skewangle.highlight(1)"
+                                   onmouseout="fractal.skewangle.highlight(0)">Skew</a>
+                            </div>
+                        </div>
+                    </td>
+                    <td><a class="button" id="trailsbutton" onclick="fractal.trails.toggle();">Trails</a></td>
+                </tr>
+            </table>
+        </div>
+        <div class="panel-footer" style="margin-top: 20px; text-align: center;">
+            <div class="container">
+                <p>Powered by <a href="http://getbootstrap.com">Twitter Bootstrap</a></p>
+                <p>Author <a href="mailto:olexandr.kucher@gmail.com">Oleksandr KOL Kucher</a></p>
+                <p>Code licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License v2.0</a>, documentation under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
