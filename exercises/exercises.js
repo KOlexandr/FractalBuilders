@@ -33,4 +33,6 @@ function test(){
     new Exercise16("ex6").build([4]);
     new Exercise16("ex7").build([4, 6]);
     new Exercise16("ex8").build([3, 7]);
+    new Exercise16("ex9").build([2, 4], 5);
+    new Exercise16("ex10").build([1, 2, 4], 5);
 }

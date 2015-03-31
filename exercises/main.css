@@ -11,5 +11,5 @@ body {
 canvas {
     display: block;
     margin: 0 auto 20px;
-    cursor: crosshair;
+    border: 0 solid #000000
 }
