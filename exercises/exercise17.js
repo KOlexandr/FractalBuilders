@@ -1,4 +1,4 @@
-function Exercise16(canvasId) {
+function Exercise17(canvasId) {
     var canvas = document.getElementById(canvasId);
 
     this.arrow = 10;
@@ -6,6 +6,7 @@ function Exercise16(canvasId) {
     this.yRetreat = 50;
     this.numberCount = 10;
     this.xMultiplier = 1000;
+    this.yMultiplier = 1000;
     this.width = canvas.width;
     this.height = canvas.height;
 
@@ -19,24 +20,29 @@ function Exercise16(canvasId) {
     this.context.lineWidth = 1;
 }
 
-Exercise16.prototype.build = function(missDigits, radix, iterations) {
+Exercise17.prototype.build = function(missDigitsX, missDigitsY, radix, iterations) {
     this.radix = radix || 10;
     this.iterations = iterations || 1000;
-    this.buildFractal(missDigits);
+    this.buildFractal(missDigitsX, missDigitsY);
     this.ruler();
 };
 
-Exercise16.prototype.buildFractal = function(missDigits) {
-    var missDigitsStr = this.missDigitsToString(missDigits);
+Exercise17.prototype.buildFractal = function(missDigitsX, missDigitsY) {
+    var missDigitsXStr = this.missDigitsToString(missDigitsX);
+    var missDigitsYStr = this.missDigitsToString(missDigitsY);
 
     for(var i = 0; i < this.iterations; i++) {
-        if(!this.containsMissNumber(missDigitsStr, i)) {
-            this.point(i);
+        if(!this.containsMissNumber(missDigitsXStr, i)) {
+            for (var j = 0; j < this.iterations; j++) {
+                if (!this.containsMissNumber(missDigitsYStr, j)) {
+                    this.point(i, j);
+                }
+            }
         }
     }
 };
 
-Exercise16.prototype.containsMissNumber = function(missDigitsStr, currentNumber) {
+Exercise17.prototype.containsMissNumber = function(missDigitsStr, currentNumber) {
     var currentNumberStr = currentNumber.toString(this.radix);
     for (var i = 0; i < missDigitsStr.length; i++) {
         if (currentNumberStr.indexOf(missDigitsStr[i]) != -1) {
@@ -46,7 +52,7 @@ Exercise16.prototype.containsMissNumber = function(missDigitsStr, currentNumber)
     return false;
 };
 
-Exercise16.prototype.missDigitsToString = function(missDigits) {
+Exercise17.prototype.missDigitsToString = function(missDigits) {
     var missDigitsStr = [];
     for (var i = 0; i < missDigits.length; i++) {
         missDigitsStr.push(String(missDigits[i]));
@@ -54,12 +60,13 @@ Exercise16.prototype.missDigitsToString = function(missDigits) {
     return missDigitsStr;
 };
 
-Exercise16.prototype.point = function(x){
-    this.context.fillRect(x + this.xRetreat, this.yRetreat + 10, 1, 5);
+Exercise17.prototype.point = function(x, y){
+    this.context.fillRect(x + this.xRetreat, y + this.yRetreat, 1, 1);
 };
 
-Exercise16.prototype.ruler = function() {
+Exercise17.prototype.ruler = function() {
     var xShift = this.xMultiplier / this.numberCount;
+    var yShift = this.yMultiplier / this.numberCount;
     this.context.beginPath();
 
     /** x coordinate line **/
@@ -93,6 +100,16 @@ Exercise16.prototype.ruler = function() {
         xPosition += xShift;
     }
     /** x coordinates **/
+
+    /** y coordinates **/
+    var yPosition = this.yRetreat + yShift;
+    for(var j = 0; j < this.numberCount; j++) {
+        this.context.moveTo(this.xRetreat - 5, yPosition);
+        this.context.lineTo(this.xRetreat + 5, yPosition);
+        this.context.fillText(Number(j + 1).toString(), this.xRetreat - 35, yPosition + 6);
+        yPosition += yShift;
+    }
+    /** y coordinates **/
 
     this.context.strokeStyle = "black";
     this.context.stroke();
