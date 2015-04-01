@@ -5,6 +5,7 @@ function Exercise17(canvasId) {
     this.xRetreat = 50;
     this.yRetreat = 50;
     this.numberCount = 10;
+    this.iterations = 1000;
     this.xMultiplier = 1000;
     this.yMultiplier = 1000;
     this.width = canvas.width;
@@ -20,9 +21,12 @@ function Exercise17(canvasId) {
     this.context.lineWidth = 1;
 }
 
-Exercise17.prototype.build = function(missDigitsX, missDigitsY, radix, iterations) {
+Exercise17.prototype.build = function(missDigitsX, missDigitsY, radix) {
+    this.context.fillStyle = "white";
+    this.context.fillRect(0, 0, this.width, this.height);
+    this.context.fillStyle = "black";
+
     this.radix = radix || 10;
-    this.iterations = iterations || 1000;
     this.buildFractal(missDigitsX, missDigitsY);
     this.ruler();
 };

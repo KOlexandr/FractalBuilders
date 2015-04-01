@@ -22,10 +22,14 @@ function step(left, right, arg, ordinate) {
 }
 
 function showCantor(num, denom) {
-    return "Cantor function f(" + num + "/" + denom + ") = " + ñantorFunction(num/denom)
+    try {
+        return "Cantor function f(" + num + "/" + denom + ") = " + ñantorFunction(num / denom);
+    } catch(e) {
+        return e;
+    }
 }
 
-function test(){
+function initExercisesPage(){
     document.getElementById("ex1").innerHTML = showCantor(7, 8);
     document.getElementById("ex2").innerHTML = showCantor(6, 23);
     document.getElementById("ex5").innerHTML = showCantor(7, 65);
@@ -40,4 +44,40 @@ function test(){
     new Exercise17("ex13").build([2, 7], [3, 5, 8], 10);
     new Exercise17("ex14").build([0, 4], [0, 4], 5);
     new Exercise17("ex15").build([1, 3], [0, 2, 4], 5);
+}
+
+function initDynamicExercisesPage(){
+    var toNumbers = function(strings) {
+        var numbers = [];
+        for(var i = 0; i < strings.length; i++) {
+            var number = parseInt(strings[i]);
+            if(!isNaN(number)) {
+                numbers.push(number);
+            }
+        }
+        return numbers;
+    };
+    var countCantor = function () {
+        var num = Number(document.getElementById("numerator").value);
+        var denom = Number(document.getElementById("denominator").value);
+        document.getElementById("cantorFunc").innerHTML = showCantor(num, denom);
+    };
+    var oneDimensionFunc = function () {
+        var str = document.getElementById("odMissNumber").value;
+        new Exercise16("oneDimension").build(toNumbers(str.split(",")));
+    };
+    var twoDimensionFunc = function () {
+        var strX = document.getElementById("tdMissNumberX").value;
+        var strY = document.getElementById("tdMissNumberY").value;
+        new Exercise17("twoDimension").build(toNumbers(strX.split(",")), toNumbers(strY.split(",")));
+    };
+
+    document.getElementById("numerator").onchange = countCantor;
+    document.getElementById("denominator").onchange = countCantor;
+    document.getElementById("odButton").onclick = oneDimensionFunc;
+    document.getElementById("tdButton").onclick = twoDimensionFunc;
+
+    countCantor();
+    oneDimensionFunc();
+    twoDimensionFunc();
 }

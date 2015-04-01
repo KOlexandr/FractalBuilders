@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dynamic Exercises</title>
+
+    <script type="text/javascript" src="exercises.js"></script>
+    <script type="text/javascript" src="exercise17.js"></script>
+    <script type="text/javascript" src="exercise16.js"></script>
+    <link rel="stylesheet" href="resources/main.css" type="text/css" charset="utf-8">
+    <link rel="stylesheet" href="resources/bootstrap.min.css" type="text/css" charset="utf-8">
+</head>
+<body onload="initDynamicExercisesPage();">
+    <div class="container" style="margin: auto;">
+        <div class="alert alert-success"><h1 class="text-center"><strong>Dynamic Exercises</strong></h1></div>
+
+        <div class="alert alert-info"><h4>Cantor Function</h4></div>
+        <div class="alert">
+            <label for="numerator">Numerator</label>
+            <input type="number" id="numerator" value="1" min="0" class="input-sm">
+            <label for="denominator">Denominator</label>
+            <input type="number" id="denominator" value="1" min="1" class="input-sm">
+            <label id="cantorFunc"></label>
+        </div>
+
+        <div class="alert alert-info"><h4>One Dimension Fractal</h4></div>
+        <div class="alert">
+            <label for="odMissNumber">Missed numbers</label>
+            <input type="text" id="odMissNumber" class="input-sm">
+            <input type="button" id="odButton" class="btn btn-success" value="Build">
+        </div>
+        <div>
+            <canvas id="oneDimension" width="1100" height="100"></canvas>
+        </div>
+
+        <div class="alert alert-info"><h4>Two Dimensions Fractal</h4></div>
+        <div class="alert">
+            <label for="tdMissNumberX">Missed numbers X</label>
+            <input type="text" id="tdMissNumberX" class="input-sm" value="1">
+            <label for="tdMissNumberY">Missed numbers Y</label>
+            <input type="text" id="tdMissNumberY" class="input-sm" value="1">
+            <input type="button" id="tdButton" class="btn btn-success" value="Build">
+        </div>
+        <div>
+            <canvas id="twoDimension" width="1100" height="1100"></canvas>
+        </div>
+
+        <div class="panel-footer" style="margin-top: 20px; text-align: center;">
+            <div class="container">
+                <p>Powered by <a href="http://getbootstrap.com">Twitter Bootstrap</a></p>
+                <p>Author <a href="mailto:olexandr.kucher@gmail.com">Oleksandr KOL Kucher</a></p>
+                <p>Code licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License v2.0</a>, documentation under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
