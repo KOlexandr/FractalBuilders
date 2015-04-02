@@ -4,7 +4,6 @@ function Exercise17(canvasId) {
     this.arrow = 10;
     this.xRetreat = 50;
     this.yRetreat = 50;
-    this.numberCount = 10;
     this.xMultiplier = 1000;
     this.yMultiplier = 1000;
     this.width = canvas.width;
@@ -34,19 +33,18 @@ Exercise17.prototype.buildFractal = function(missDigitsX, missDigitsY) {
     var missDigitsXStr = this.missDigitsToString(missDigitsX);
     var missDigitsYStr = this.missDigitsToString(missDigitsY);
 
-    for(var i = 0; i < 1; i+=0.001) {
-        if(!this.containsMissNumber(missDigitsXStr, i.toPrecision(4))) {
-            for (var j = 0; j < 1; j+0.001) {
-                if (!this.containsMissNumber(missDigitsYStr, j.toPrecision(4))) {
-                    this.point(Math.floor(i*this.xMultiplier), Math.floor(j*this.yMultiplier));
+    for(var i = 0, i1 = 0; i < 1; i+=0.001, i1++) {
+        if(!this.containsMissDigit(missDigitsXStr, i.toString(this.radix).substr(0, 5))) {
+            for (var j = 0, j1 = 0; j < 1; j+=0.001, j1++) {
+                if (!this.containsMissDigit(missDigitsYStr, j.toString(this.radix).substr(0, 5))) {
+                    this.point(i1, j1);
                 }
             }
         }
     }
 };
 
-Exercise17.prototype.containsMissNumber = function(missDigitsStr, currentNumber) {
-    var currentNumberStr = Number(currentNumber).toString(this.radix).substr(0, 5);
+Exercise17.prototype.containsMissDigit = function(missDigitsStr, currentNumberStr) {
     for (var i = 0; i < missDigitsStr.length; i++) {
         if (currentNumberStr.indexOf(missDigitsStr[i]) != -1) {
             return true;
@@ -68,8 +66,8 @@ Exercise17.prototype.point = function(x, y){
 };
 
 Exercise17.prototype.ruler = function() {
-    var xShift = this.xMultiplier / this.numberCount;
-    var yShift = this.yMultiplier / this.numberCount;
+    var xShift = this.xMultiplier / this.radix;
+    var yShift = this.yMultiplier / this.radix;
     this.context.beginPath();
 
     /** x coordinate line **/
@@ -96,20 +94,20 @@ Exercise17.prototype.ruler = function() {
 
     /** x coordinates **/
     var xPosition = this.xRetreat + xShift;
-    for(var i = 0; i < this.numberCount; i++) {
+    for(var i = 0; i < this.radix; i++) {
         this.context.moveTo(xPosition, this.yRetreat - 5);
         this.context.lineTo(xPosition, this.yRetreat + 5);
-        this.context.fillText(Number(i + 1).toString(), xPosition - 13, this.yRetreat - 10);
+        this.context.fillText(Number(i + 1).toString(this.radix), xPosition - 13, this.yRetreat - 10);
         xPosition += xShift;
     }
     /** x coordinates **/
 
     /** y coordinates **/
     var yPosition = this.yRetreat + yShift;
-    for(var j = 0; j < this.numberCount; j++) {
+    for(var j = 0; j < this.radix; j++) {
         this.context.moveTo(this.xRetreat - 5, yPosition);
         this.context.lineTo(this.xRetreat + 5, yPosition);
-        this.context.fillText(Number(j + 1).toString(), this.xRetreat - 35, yPosition + 6);
+        this.context.fillText(Number(j + 1).toString(this.radix), this.xRetreat - 35, yPosition + 6);
         yPosition += yShift;
     }
     /** y coordinates **/

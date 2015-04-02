@@ -4,7 +4,6 @@ function Exercise16(canvasId) {
     this.arrow = 10;
     this.xRetreat = 50;
     this.yRetreat = 50;
-    this.numberCount = 10;
     this.xMultiplier = 1000;
     this.width = canvas.width;
     this.height = canvas.height;
@@ -32,15 +31,14 @@ Exercise16.prototype.build = function(missDigits, radix) {
 Exercise16.prototype.buildFractal = function(missDigits) {
     var missDigitsStr = this.missDigitsToString(missDigits);
 
-    for(var i = 0; i < 1; i+=0.001) {
-        if(!this.containsMissNumber(missDigitsStr, i.toPrecision(4))) {
-            this.point(Math.floor(i*this.xMultiplier));
+    for(var i = 0, j = 0; i < 1; i+=0.001, j++) {
+        if(!this.containsMissDigit(missDigitsStr, i.toString(this.radix).substr(0, 5))) {
+            this.point(j);
         }
     }
 };
 
-Exercise16.prototype.containsMissNumber = function(missDigitsStr, currentNumber) {
-    var currentNumberStr = Number(currentNumber).toString(this.radix).substr(0, 5);
+Exercise16.prototype.containsMissDigit = function(missDigitsStr, currentNumberStr) {
     for (var i = 0; i < missDigitsStr.length; i++) {
         if (currentNumberStr.indexOf(missDigitsStr[i]) != -1) {
             return true;
@@ -62,7 +60,7 @@ Exercise16.prototype.point = function(x){
 };
 
 Exercise16.prototype.ruler = function() {
-    var xShift = this.xMultiplier / this.numberCount;
+    var xShift = this.xMultiplier / this.radix;
     this.context.beginPath();
 
     /** x coordinate line **/
@@ -89,10 +87,10 @@ Exercise16.prototype.ruler = function() {
 
     /** x coordinates **/
     var xPosition = this.xRetreat + xShift;
-    for(var i = 0; i < this.numberCount; i++) {
+    for(var i = 0; i < this.radix; i++) {
         this.context.moveTo(xPosition, this.yRetreat - 5);
         this.context.lineTo(xPosition, this.yRetreat + 5);
-        this.context.fillText(Number(i + 1).toString(), xPosition - 13, this.yRetreat - 10);
+        this.context.fillText(Number(i + 1).toString(this.radix), xPosition - 13, this.yRetreat - 10);
         xPosition += xShift;
     }
     /** x coordinates **/
