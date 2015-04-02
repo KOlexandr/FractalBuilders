@@ -5,7 +5,6 @@ function Exercise16(canvasId) {
     this.xRetreat = 50;
     this.yRetreat = 50;
     this.numberCount = 10;
-    this.iterations = 1000;
     this.xMultiplier = 1000;
     this.width = canvas.width;
     this.height = canvas.height;
@@ -33,15 +32,15 @@ Exercise16.prototype.build = function(missDigits, radix) {
 Exercise16.prototype.buildFractal = function(missDigits) {
     var missDigitsStr = this.missDigitsToString(missDigits);
 
-    for(var i = 0; i < this.iterations; i++) {
-        if(!this.containsMissNumber(missDigitsStr, i)) {
-            this.point(i);
+    for(var i = 0; i < 1; i+=0.001) {
+        if(!this.containsMissNumber(missDigitsStr, i.toPrecision(4))) {
+            this.point(Math.floor(i*this.xMultiplier));
         }
     }
 };
 
 Exercise16.prototype.containsMissNumber = function(missDigitsStr, currentNumber) {
-    var currentNumberStr = currentNumber.toString(this.radix);
+    var currentNumberStr = Number(currentNumber).toString(this.radix).substr(0, 5);
     for (var i = 0; i < missDigitsStr.length; i++) {
         if (currentNumberStr.indexOf(missDigitsStr[i]) != -1) {
             return true;

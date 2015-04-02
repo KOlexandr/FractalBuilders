@@ -5,7 +5,6 @@ function Exercise17(canvasId) {
     this.xRetreat = 50;
     this.yRetreat = 50;
     this.numberCount = 10;
-    this.iterations = 1000;
     this.xMultiplier = 1000;
     this.yMultiplier = 1000;
     this.width = canvas.width;
@@ -35,11 +34,11 @@ Exercise17.prototype.buildFractal = function(missDigitsX, missDigitsY) {
     var missDigitsXStr = this.missDigitsToString(missDigitsX);
     var missDigitsYStr = this.missDigitsToString(missDigitsY);
 
-    for(var i = 0; i < this.iterations; i++) {
-        if(!this.containsMissNumber(missDigitsXStr, i)) {
-            for (var j = 0; j < this.iterations; j++) {
-                if (!this.containsMissNumber(missDigitsYStr, j)) {
-                    this.point(i, j);
+    for(var i = 0; i < 1; i+=0.001) {
+        if(!this.containsMissNumber(missDigitsXStr, i.toPrecision(4))) {
+            for (var j = 0; j < 1; j+0.001) {
+                if (!this.containsMissNumber(missDigitsYStr, j.toPrecision(4))) {
+                    this.point(Math.floor(i*this.xMultiplier), Math.floor(j*this.yMultiplier));
                 }
             }
         }
@@ -47,7 +46,7 @@ Exercise17.prototype.buildFractal = function(missDigitsX, missDigitsY) {
 };
 
 Exercise17.prototype.containsMissNumber = function(missDigitsStr, currentNumber) {
-    var currentNumberStr = currentNumber.toString(this.radix);
+    var currentNumberStr = Number(currentNumber).toString(this.radix).substr(0, 5);
     for (var i = 0; i < missDigitsStr.length; i++) {
         if (currentNumberStr.indexOf(missDigitsStr[i]) != -1) {
             return true;
