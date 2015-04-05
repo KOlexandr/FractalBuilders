@@ -23,9 +23,37 @@ function step(left, right, arg, ordinate) {
 
 function showCantor(num, denom) {
     try {
-        return "Cantor function f(" + num + "/" + denom + ") = " + ñantorFunction(num / denom);
+        return "Cantor function f(" + num + "/" + denom + ") = " + cantor3(num / denom);
     } catch(e) {
         return e;
+    }
+}
+
+function cantor(n) {
+    if (n == 1) {
+        return 1;
+    } else if (n == 0) {
+        return 0;
+    } else {
+        var string = Number(n).toString(3);
+        var sum = 0;
+        for (var i = 2, k = 1; i < string.length; i++, k++) {
+            var ai = Number(string[i]);
+            sum += (ai / Math.pow(2, k+1))
+        }
+
+        return sum;
+    }
+}
+
+function cantor3(n) {
+    if (n == 1) {
+        return 1;
+    } else if (n == 0) {
+        return 0;
+    } else {
+        var string = Number(n).toString(3);
+        return parseFloat(string.replace(/2/g, "1"), 2);
     }
 }
 
