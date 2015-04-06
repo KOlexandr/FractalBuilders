@@ -1,60 +1,38 @@
-function ñantorFunction(n) {
-    // calculate function of Ñantor
-    // n must be in [0,1] interval
-    if (n < 0 || n > 1) {
-        throw new Error('Invalid input argument');
-    } else if (n == 0 || n == 1) {
-        return n;
-    } else {
-        return step(0, 1, n, 0.5);
-    }
-}
-
-function step(left, right, arg, ordinate) {
-    var partLen = (right - left) / 3;
-    if ((arg >= left + partLen) && (arg <= right - partLen)) {
-        return ordinate;
-    } else if (arg < (right + left) / 2) {
-        return step(left, left + partLen, arg, ordinate - ordinate / 2);
-    } else {
-        return step(right - partLen, right, arg, ordinate + ordinate / 2);
-    }
-}
-
 function showCantor(num, denom) {
     try {
-        return "Cantor function f(" + num + "/" + denom + ") = " + cantor3(num / denom);
+        return "Cantor function f(" + num + "/" + denom + ") = " + cantor(num / denom);
     } catch(e) {
         return e;
     }
 }
 
 function cantor(n) {
-    if (n == 1) {
+    if(n > 1 || n < 0) {
+        throw new Error('Invalid input argument');
+    } else if (n == 1) {
         return 1;
     } else if (n == 0) {
         return 0;
     } else {
-        var string = Number(n).toString(3);
-        var sum = 0;
-        for (var i = 2, k = 1; i < string.length; i++, k++) {
-            var ai = Number(string[i]);
-            sum += (ai / Math.pow(2, k+1))
+        var str = Number(n).toString(3);
+        var oneIndex = str.indexOf("1");
+        if(oneIndex != -1) {
+            str = str.substring(0, oneIndex + 1);
         }
-
-        return sum;
+        var binaryNumberString = str.replace(/2/g, "1");
+        return binaryFloatingPointToDecimal(binaryNumberString);
     }
 }
 
-function cantor3(n) {
-    if (n == 1) {
-        return 1;
-    } else if (n == 0) {
-        return 0;
-    } else {
-        var string = Number(n).toString(3);
-        return parseFloat(string.replace(/2/g, "1"), 2);
+function binaryFloatingPointToDecimal(binaryNumberString, accuracy) {
+    accuracy = accuracy || 20;
+    var integer = parseInt(binaryNumberString.substring(0, binaryNumberString.indexOf(".")), 2);
+    var rest = binaryNumberString.substr(binaryNumberString.indexOf(".") + 1, accuracy);
+    var real = 0;
+    for(var i = 0; i < rest.length; i++) {
+        real += Math.pow(2, -(i+1)) * parseInt(rest[i], 2);
     }
+    return integer + real;
 }
 
 function initExercisesPage(){
